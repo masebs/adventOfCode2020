@@ -57,5 +57,5 @@ class shipTrace():
         print(f"Task 2: Finished tracing ship. Distance travelled: {distTravelled}, final position: {self.pos}, Manhattan distance from start: {distFromStart}")
      
 st = shipTrace("input-day12")
-st.traceShip()
+st.traceShip() 
 
