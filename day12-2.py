@@ -58,4 +58,4 @@ class shipTrace():
      
 st = shipTrace("input-day12")
 st.traceShip()
-# appended comment
+
