@@ -16,7 +16,7 @@ class shipTrace():
         self.d = np.array([10,1])   # current direction: [1,0] = E, [-1,0] = W, [0,1] = N, [0,-1] = S
         self.cmds = [[lines[i][0], int(lines[i][1:])] for i in range(len(lines))]
 
-    def getDir(self,cmd):
+    def getDir(self, cmd):
         if (cmd[0] == 'N'):
             self.d = self.d + cmd[1]*np.array([0,1])
             return np.array([0,0])
@@ -48,7 +48,7 @@ class shipTrace():
     def traceShip(self):
         distTravelled = 0
         startpos = np.copy(self.pos)
-        for i, c in enumerate(self.cmds):
+        for c in self.cmds:
             oldpos = np.copy(self.pos)
             self.pos += self.getDir(c)
             #print(f"dir: {self.d} pos: {self.pos}")
