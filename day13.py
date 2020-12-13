@@ -49,8 +49,8 @@ for j, k in enumerate(otherlist):
     idiff[j] = k - maxidx
     vals[j] = nrs[k]
     
-# sort vals and idiff in ascending order (w.r.t. vals); not really necessary, but this might provide the fastest progress
-#   (funnily, it actually takes a few less iterations if we sort it descending)
+# sort vals and idiff in descending order (w.r.t. vals); not really necessary, but this might provide the fastest progress
+#   (funnily, it actually takes a few less iterations if we sort it ascending)
 sortidcs = np.argsort(vals)
 vals = vals[sortidcs][::-1]
 idiff = idiff[sortidcs][::-1]
