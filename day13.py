@@ -49,7 +49,8 @@ for j, k in enumerate(otherlist):
     idiff[j] = k - maxidx
     vals[j] = nrs[k]
     
-# sort vals and idiff in ascending order (w.r.t. vals); not really necessary, but this will provide the fastest progress
+# sort vals and idiff in ascending order (w.r.t. vals); not really necessary, but this might provide the fastest progress
+#   (funnily, it actually takes a few less iterations if we sort it descending)
 sortidcs = np.argsort(vals)
 vals = vals[sortidcs][::-1]
 idiff = idiff[sortidcs][::-1]
@@ -60,7 +61,7 @@ tfound = -1         # the result
 i = 0               # loop counter         
 inc = vals[0]       # initial increment for loop counter
 countLoops = 0      # counts the number of actual loops
-valsCovered = 0   # counts the number of vals for which a remainder 0 has already been found
+valsCovered = 0     # counts the number of vals for which a remainder 0 has already been found
 
 # Loop: Increase time stamp by inc, and look for a remainder 0 for the next vals[j] where we haven't found one yet.
 #       Then, multiply increment by vals[j], as there can be no relevant values before that increment
