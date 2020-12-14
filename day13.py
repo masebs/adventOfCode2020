@@ -52,8 +52,8 @@ for j, k in enumerate(otherlist):
 # sort vals and idiff in descending order (w.r.t. vals); not really necessary, but this might provide the fastest progress
 #   (funnily, it actually takes a few less iterations if we sort it ascending)
 sortidcs = np.argsort(vals)
-vals = vals[sortidcs][::-1]
-idiff = idiff[sortidcs][::-1]
+vals = vals[sortidcs]#[::-1]
+idiff = idiff[sortidcs]#[::-1]
 
 # initialize stuff for the loop below
 found = False       # loop condition
@@ -61,6 +61,7 @@ tfound = -1         # the result
 i = 0               # loop counter         
 inc = vals[0]       # initial increment for loop counter
 countLoops = 0      # counts the number of actual loops
+countModEvals = 0   # counts number of mod evaluations
 valsCovered = 0     # counts the number of vals for which a remainder 0 has already been found
 
 # Loop: Increase time stamp by inc, and look for a remainder 0 for the next vals[j] where we haven't found one yet.
@@ -71,6 +72,7 @@ while not found:
     found = True
     
     for j in range(valsCovered+1, idiff.shape[0]):  # this loop will usually only be executed once, maximum twice (when remainder 0 found)
+        countModEvals += 1
         if ((i+idiff[j]) % vals[j] == 0):           # if the remainder is 0 for vals[j], we can multiply inc by it, and we are done with vals[j]
             print(f" Found {i+idiff[j]} mod {vals[j]} == 0")
             inc *= vals[j]                          # use increased increment from here on
@@ -83,4 +85,4 @@ while not found:
     if found:                # remainder was 0 for all values in vals, so we've got it!
         tfound = i - maxidx  # calculate timestamp which belongs to the first element in the unsorted vals array
 
-print(f"Task 2: First timestamp fulfilling requirements is {tfound}. Found it in {countLoops} loop iterations.")
+print(f"Task 2: First timestamp fulfilling requirements is {tfound}. Found it in {countLoops} loop iterations. Evaluated mod {countModEvals} times.")
