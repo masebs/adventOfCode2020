@@ -57,30 +57,29 @@ print(f"  ... removing {len(invalidTickets)} invalid tickets from {len(tickets)}
 for t in invalidTickets:
     tickets.remove(t)
     
-# get values from all tickets for one field, and then check rule by rule for these values
+### Get values from all tickets for one field, then check rule by rule for these values whether they are fulfilled,
+### and then look for a unique mapping from the lists of fulfilled rules
 
-validDict = {}
-for rd in ruledict.keys():
-    validDict[rd] = []
+validDict = {} # will contain the valid columns for each rule
+for rd in ruledict.keys(): 
+    validDict[rd] = [] # initialize with empty lists
     
-for i in range(len(tickets[0])):
-    vals = [t[i] for t in tickets]
-    maxv = max(vals)
-    minv = min(vals)
-    for rd in ruledict.keys():
+for i in range(len(tickets[0])):    # go through columns 
+    vals = [t[i] for t in tickets]  # all values from this columns
+    for rd in ruledict.keys():      # check for each rule whether the current column fulfills it
         r = ruledict[rd]
-        if ((r[0][0] <= minv) and (maxv <= r[1][1])): # all vals are between the outer bounds
+        if ((r[0][0] <= min(vals)) and (max(vals) <= r[1][1])): # are all vals between the outer bounds?
             forbiddenRange = list(range(r[0][1]+1, r[1][0]))
-            if not any([v in forbiddenRange for v in vals]): # check if any values are in the forbidden range in between 
-                validDict[rd].append(i)
+            if not any([v in forbiddenRange for v in vals]):    # are any vals in the forbidden range in between?
+                validDict[rd].append(i)  # add this column to the list of valid columns for this rule
 
-mapping = {}
-while (len(mapping.keys()) < len(validDict.keys())):             
-    for v in validDict.keys():
-        if (len(validDict[v]) == 1): # this is a unique value
-            foundval = validDict[v][0]
-            mapping[v] = foundval
-            for rv in validDict.keys():
+mapping = {} # now we need to find a unique mapping from the validDict - let's hope there is one
+while (len(mapping.keys()) < len(validDict.keys())): # repeat until we have a complete mapping
+    for v in validDict.keys():          # go through rules
+        if (len(validDict[v]) == 1):    # if this rule if fulfilled by exactly one column, we have match
+            foundval = validDict[v][0]  
+            mapping[v] = foundval       # add to our mapping
+            for rv in validDict.keys(): # remove this column from all other entries in validDict
                 if (foundval in validDict[rv]):
                     validDict[rv].remove(foundval)
 
