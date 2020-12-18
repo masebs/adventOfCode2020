@@ -32,41 +32,35 @@ with open("input-day18", 'r') as f:
 
 result = 0
 
-lines = ["(1+2)"]
-
 for l in lines:
-#    l = l.replace(" ", "") # remove all whitespace
-#    l2 = l
-#    ## add brackets to assure correct precedence!
-#    i = 1
-#    while (i < len(l)-1):
-#        if (l[i] == '+'):
-#            j = i - 1
-#            if (l[j].isnumeric()):
-#                while (l[j].isnumeric()):
-#                    j -= 1
-#                    if (j == 0):
-#                        break
-#                l2 = l2[:j-1] + '(' + l2[j-1:]
-#            else:
-#                pass
-#            j = i + 1
-#            if (l[j].isnumeric()):
-#                while (l[j].isnumeric()):
-#                    j += 1
-#                    if (j == len(l)):
-#                        break
-#                l2 = l2[:j+1] + ')' + l2[j+1:]
-#            else:
-#                pass
-#            l = l2
-#            
-#        i += 1
-        
+    ## add brackets to assure correct precedence!
+    # first, double all existing brackets
+    insertPos = []
+    for i in range(len(l)):
+        if (l[i] == '('):
+            insertPos.append([i,'('])
+        elif (l[i] == ')'):
+            insertPos.append([i,')'])
+            
+    for i, [p, c] in enumerate(insertPos):
+        l = l[:p+i] + c + l[p+i:]
+    
+    # Append brackets at the begin and at the end
+    l = '( ' + l
+    l = l + ' )'
+    
+    # Replace * (which has lower precedence) with )*(
+    i = 0
+    while (i < len(l)):
+        if (l[i] == '*'):
+            l = l[:i] + ') * (' + l[i+1:]
+            i += 4
+        i += 1
+    
     root = opTree(None)
     subtrees = []
     cur = root
-    for c in l:
+    for ic,c in enumerate(l):
         if (c == ' '):
             continue
         elif (c == '('):
@@ -78,6 +72,8 @@ for l in lines:
         elif (c == ')'):
             while (cur.parent != None): # go to root of subtree
                 cur = cur.parent 
+            while (cur.op == None) and (cur.right == None): # This is if there is an unnecessary bracket around the expression
+                cur = cur.left
             insertNode = subtrees.pop()
             cur.parent = insertNode
             if (insertNode.left == None):
@@ -87,6 +83,20 @@ for l in lines:
             cur = insertNode
             
         elif (c in ['+', '*']):
+            ## This could be the variant with lookahead, without string editing
+            # nextop = ''
+            # for lc in l[ic+1:]: # look for next operator ahead
+            #     if (lc == '+'):
+            #         nextop = '+'
+            #         break
+            #     elif (lc == '*'):
+            #         nextop = '*'
+            #         break
+            # if (nextop == '+'): 
+            #     # nextop is '+', which has high precedence -> save current operator and following operand for later,
+            #     # and treat the next operation first!
+            # else
+            #     # nextop is *, which has low precedence, or there is no other op -> continue building optree as usual  
             while (cur.parent != None) and ((cur.parent.op != None) if cur.parent != None else False): # go up until we find a free node
                 cur = cur.parent
             if (cur.op == None):   # found a free node
@@ -113,6 +123,9 @@ for l in lines:
                 newCur.left = cur
                 cur = newCur
     
+    while (root.op == None) and (root.right == None): # This is if there is an unnecessary bracket around the expression
+        root = root.left
+        
     result += root.execute()
 
 print(f"Task 2: Sum is {result}")

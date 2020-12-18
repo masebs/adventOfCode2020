@@ -30,9 +30,10 @@ class opTree:
 
 with open("input-day18", 'r') as f:
     lines = list(f.read().splitlines())
+    
+#lines =  ["((1 + ((2) + ((1+2))) ))"]
 
 result = 0
-
 for l in lines:
     root = opTree(None)
     subtrees = []
@@ -50,6 +51,8 @@ for l in lines:
         elif (c == ')'):
             while (cur.parent != None): # go to root of subtree
                 cur = cur.parent 
+            while (cur.op == None) and (cur.right == None): # This is if there is an unnecessary bracket around the expression
+                cur = cur.left
             insertNode = subtrees.pop()
             cur.parent = insertNode
             if (insertNode.left == None):
@@ -84,7 +87,10 @@ for l in lines:
                 cur.parent = newCur
                 newCur.left = cur
                 cur = newCur
-    
+                
+    while (root.op == None) and (root.right == None): # This is if there is an unnecessary bracket around the expression
+        root = root.left
+        
     result += root.execute()
 
 print(f"Task 1: Sum is {result}")
