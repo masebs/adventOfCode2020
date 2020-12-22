@@ -63,11 +63,11 @@ else:
 print(f"Task 1: Player {winner} wins after {count} rounds with score {score}.")
 print()
 
-reccnt = []
-reccnt.append(0)
+reccnt = 0
 
 def play(p1, p2, reclvl):
-    reccnt[0] += 1
+    global reccnt
+    reccnt += 1
         
 #    print(f"=== Game {reclvl+1} ===")
 #    print()
