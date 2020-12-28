@@ -11,7 +11,7 @@ Created on Mon Dec  7 06:10:34 2020
 target = "shiny gold"
 
 lines = []
-with open("input-day7", 'r') as f:
+with open("input-day07", 'r') as f:
     lines = f.readlines()
 
 rules =[]

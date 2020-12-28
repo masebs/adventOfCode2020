@@ -8,7 +8,7 @@ Created on Sat Dec  5 17:00:39 2020
 
 import numpy as np
 
-f = open("input-day2a.txt", 'r')
+f = open("input-day02", 'r')
 
 lines = f.readlines()
 

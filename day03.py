@@ -8,7 +8,7 @@ Created on Sat Dec  5 17:00:39 2020
 
 import numpy as np
     
-filename = "input-day3"
+filename = "input-day03"
 
 class TobboganJourney:
     

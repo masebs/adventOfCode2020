@@ -8,7 +8,7 @@ Created on Sat Dec  5 20:18:00 2020
 #import numpy as np
 import re
 
-with open("input-day4", 'r') as f:
+with open("input-day04", 'r') as f:
     lines = f.readlines()
 
 pplist = []         # full passport data

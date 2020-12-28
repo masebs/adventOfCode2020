@@ -9,7 +9,7 @@ Created on Sat Dec  5 21:46:11 2020
 import numpy as np
 
 lines = []
-with open("input-day5", 'r') as f:
+with open("input-day05", 'r') as f:
     while(True):
         l = f.readline()[:-1]
         if (l == ''):

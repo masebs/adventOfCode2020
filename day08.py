@@ -7,7 +7,7 @@ Created on Tue Dec  8 05:58:49 2020
 """
 
 lines = []
-with open("input-day8", 'r') as f:
+with open("input-day08", 'r') as f:
     lines = f.readlines()
 
 cmds = []

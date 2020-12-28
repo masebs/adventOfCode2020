@@ -8,7 +8,7 @@ Created on Sat Dec  5 17:00:39 2020
 
 import numpy as np
 
-f = open("input-day1a.txt", 'r')
+f = open("input-day01", 'r')
 nbrs = np.asarray(f.read().splitlines(), dtype='int')
 
 for c1, n in enumerate(nbrs):

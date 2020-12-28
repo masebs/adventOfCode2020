@@ -6,7 +6,7 @@ Created on Wed Dec  9 05:58:54 2020
 @author: marc
 """
 
-with open("input-day9", 'r') as f:
+with open("input-day09", 'r') as f:
     nr = list(map(int, f.read().splitlines()))
 
 preamblelength = 25
